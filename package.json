@@ -1,13 +1,14 @@
 {
   "name": "multiplayer-poker-room",
   "version": "1.0.0",
-  "description": "Multiplayer 5-card draw poker with room codes and fake money",
+  "description": "Multiplayer 5-card draw poker with accounts, debt, and cosmetics",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.7"
   }
 }

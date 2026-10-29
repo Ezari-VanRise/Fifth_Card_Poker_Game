@@ -18,49 +18,51 @@
       --accent-dark: #255fdb;
       --danger: #ec5959;
       --success: #66d17a;
+      --theme-bg: #0a4f2a;
+      --theme-table: #0d6d3d;
+      --card-back: #1d4f7d;
     }
 
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
+      background: var(--theme-bg);
       color: var(--text);
-      background: radial-gradient(circle at top, #1a7d48 0%, #0d532d 30%, #062d1b 100%);
+    }
+
+    body {
       display: grid;
       place-items: center;
+      background: radial-gradient(circle at top, #1a7d48 0%, var(--theme-table) 30%, #062d1b 100%);
+      transition: background 0.25s ease;
     }
 
     .wrap {
-      width: min(980px, 96vw);
+      width: min(1100px, 96vw);
       background: rgba(7, 66, 36, 0.95);
       border: 3px solid rgba(255,255,255,0.08);
       border-radius: 24px;
-      padding: 20px 18px 18px;
-      box-shadow: 0 18px 35px rgba(0,0,0,0.3);
+      padding: 18px;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.35);
     }
 
     h1 {
       text-align: center;
       margin: 0 0 8px;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .subtitle {
+      color: var(--muted);
       text-align: center;
       margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 0.96rem;
     }
 
-    .lobby {
-      display: grid;
-      gap: 14px;
-      padding: 12px 8px 4px;
-    }
+    .hidden { display: none !important; }
 
     .row {
       display: flex;
@@ -68,6 +70,14 @@
       gap: 12px;
       justify-content: center;
       align-items: center;
+    }
+
+    .auth-box, .room-box, .shop-box, .panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-top: 12px;
     }
 
     input, button {
@@ -89,7 +99,7 @@
       border: none;
       background: var(--accent);
       color: white;
-      padding: 12px 18px;
+      padding: 12px 16px;
       border-radius: 10px;
       font-weight: 800;
       letter-spacing: 0.04em;
@@ -104,68 +114,67 @@
       transform: translateY(-1px);
     }
 
+    button.secondary {
+      background: #4a3a29;
+    }
+
+    button.secondary:hover:not(:disabled) {
+      background: #352918;
+    }
+
+    button.danger {
+      background: var(--danger);
+    }
+
+    button.danger:hover:not(:disabled) {
+      background: #c92f2f;
+    }
+
     button:disabled {
       opacity: 0.45;
       cursor: not-allowed;
       box-shadow: none;
     }
 
-    .secondary {
-      background: #4a3a29;
-    }
-
-    .secondary:hover:not(:disabled) {
-      background: #352918;
-    }
-
-    .status {
-      margin-top: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      padding: 12px 14px;
-      min-height: 70px;
+    .stats {
       display: grid;
-      place-items: center;
-      text-align: center;
-      color: var(--text);
-      font-size: 1rem;
-      line-height: 1.4;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .status strong {
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .stat-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 1.35rem;
+      font-weight: 800;
       color: var(--gold);
     }
 
     .board {
-      margin-top: 20px;
       display: grid;
       gap: 16px;
     }
 
-    .panel {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--panel-border);
-      border-radius: 16px;
-      padding: 12px 14px;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 800;
-    }
-
     .cards {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 12px;
       min-height: 170px;
     }
@@ -184,6 +193,7 @@
       color: #1c1c1c;
       font-weight: 800;
       user-select: none;
+      cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
 
@@ -211,49 +221,16 @@
       margin: 0 auto;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 10px 12px;
-      text-align: center;
-    }
-
-    .stat-label {
-      display: block;
-      color: var(--muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .stat-value {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--gold);
-    }
-
     .players {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 10px;
     }
 
     .player {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 10px 12px;
       color: white;
     }
@@ -268,12 +245,57 @@
       font-weight: 800;
     }
 
-    .showdown {
-      margin-top: 12px;
+    .status {
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255.08);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
-      padding: 12px 14px;
+      min-height: 72px;
+      margin-top: 10px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 12px;
+      color: var(--text);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .shop-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .shop-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .shop-item h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .shop-item p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .showdown {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
     }
 
     .showdown h3 {
@@ -285,8 +307,8 @@
 
     .showdown ul {
       margin: 0;
-      padding-left: 18px;
-      line-height: 1.5;
+      padding-left: 20px;
+      line-height: 1.6;
     }
 
     @media (max-width: 700px) {
@@ -294,27 +316,62 @@
         width: 76px;
         height: 110px;
       }
-      .cards {
-        gap: 8px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>5 Card Draw</h1>
-    <p class="subtitle">Multiplayer poker with fake money • up to 6 players per room</p>
+    <p class="subtitle">Multiplayer poker with accounts, debt, and cosmetics</p>
 
-    <div id="loginPanel" class="lobby">
+    <div id="authPanel" class="auth-box">
       <div class="row">
-        <input id="playerName" type="text" maxlength="20" value="Player" placeholder="Your name" />
+        <input id="username" placeholder="Username" maxlength="20" />
+        <input id="password" type="password" placeholder="Password" maxlength="24" />
+      </div>
+      <div class="row" style="margin-top:12px;">
+        <button id="registerBtn">Register</button>
+        <button id="loginBtn" class="secondary">Login</button>
+      </div>
+    </div>
+
+    <div id="lobbyPanel" class="hidden">
+      <div class="row">
+        <button id="openShopBtn" class="secondary">Shop</button>
+        <button id="logOutBtn" class="danger">Logout</button>
       </div>
 
-      <div class="row">
-        <button id="createBtn">Create Room</button>
-        <input id="joinCode" type="text" maxlength="5" placeholder="Room code" />
-        <button id="joinBtn" class="secondary">Join Room</button>
+      <div class="row" style="margin-top:12px;">
+        <input id="roomCodeInput" maxlength="5" placeholder="Room code" />
+        <button id="joinRoomBtn" class="secondary">Join Room</button>
+        <button id="createRoomBtn">Create Room</button>
       </div>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Balance</span>
+          <span id="balanceValue" class="stat-value">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Debt</span>
+          <span id="debtValue" class="stat-value">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Theme</span>
+          <span id="themeValue" class="stat-value">Classic</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Cards</span>
+          <span id="cardBackValue" class="stat-value">Classic</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="shopPanel" class="shop-box hidden">
+      <div class="row">
+        <button id="closeShopBtn" class="secondary">Close Shop</button>
+      </div>
+      <div id="shopItems" class="shop-items"></div>
     </div>
 
     <div id="gamePanel" class="hidden">
@@ -332,8 +389,8 @@
           <span id="potDisplay" class="stat-value">0</span>
         </div>
         <div class="stat">
-          <span class="stat-label">Chips</span>
-          <span id="chipDisplay" class="stat-value">1000</span>
+          <span class="stat-label">Current Bet</span>
+          <span id="currentBetDisplay" class="stat-value">0</span>
         </div>
       </div>
 
@@ -343,7 +400,7 @@
 
       <div class="board">
         <div class="panel">
-          <div class="panel-header">
+          <div class="panel-header" style="display:flex;justify-content:space-between;">
             <span>Players</span>
             <span id="roundInfo">Lobby</span>
           </div>
@@ -351,16 +408,24 @@
         </div>
 
         <div class="panel">
-          <div class="panel-header">
+          <div class="panel-header" style="display:flex;justify-content:space-between;">
             <span>Your Hand</span>
             <span id="handStatus">Waiting</span>
           </div>
           <div id="selfCards" class="cards"></div>
         </div>
 
-        <div class="row">
-          <button id="startBtn" class="secondary">Start Next Hand</button>
-          <button id="discardBtn" disabled>Discard & Draw</button>
+        <div class="actions">
+          <button id="checkBtn" class="secondary">Check</button>
+          <button id="callBtn" class="secondary">Call</button>
+          <button id="raiseBtn" class="secondary">Raise</button>
+          <button id="foldBtn" class="danger">Fold</button>
+          <button id="standBtn" class="secondary">Stand</button>
+          <button id="discardBtn">Discard & Draw</button>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <input id="raiseInput" type="number" min="10" step="10" value="25" placeholder="Raise amount" />
         </div>
       </div>
 
@@ -373,54 +438,126 @@
     const socket = io();
 
     const state = {
-      myId: "",
+      user: null,
       roomCode: "",
+      myId: "",
+      phase: "lobby",
       players: [],
       myHand: [],
       selected: [],
-      phase: "lobby",
-      dealerIndex: 0,
       currentPot: 0,
-      chips: 1000,
-      showdown: null
+      currentBet: 0,
+      showdown: null,
+      lastStatus: "",
+      theme: "classic",
+      cardBack: "classic"
     };
 
-    const loginPanel = document.getElementById("loginPanel");
+    const authPanel = document.getElementById("authPanel");
+    const lobbyPanel = document.getElementById("lobbyPanel");
+    const shopPanel = document.getElementById("shopPanel");
     const gamePanel = document.getElementById("gamePanel");
     const statusEl = document.getElementById("status");
     const playersEl = document.getElementById("players");
     const selfCardsEl = document.getElementById("selfCards");
+    const showdownEl = document.getElementById("showdown");
     const roomCodeDisplay = document.getElementById("roomCodeDisplay");
     const dealerDisplay = document.getElementById("dealerDisplay");
     const potDisplay = document.getElementById("potDisplay");
-    const chipDisplay = document.getElementById("chipDisplay");
+    const currentBetDisplay = document.getElementById("currentBetDisplay");
     const roundInfo = document.getElementById("roundInfo");
     const handStatus = document.getElementById("handStatus");
-    const startBtn = document.getElementById("startBtn");
-    const discardBtn = document.getElementById("discardBtn");
-    const showdownEl = document.getElementById("showdown");
-    const playerNameInput = document.getElementById("playerName");
-    const joinCodeInput = document.getElementById("joinCode");
+    const balanceValue = document.getElementById("balanceValue");
+    const debtValue = document.getElementById("debtValue");
+    const themeValue = document.getElementById("themeValue");
+    const cardBackValue = document.getElementById("cardBackValue");
 
-    function getRankValue(rank) {
-      const map = {
-        "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9,
-        "10": 10, J: 11, Q: 12, K: 13, A: 14
-      };
-      return map[rank];
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      if (theme === "royal") {
+        root.style.setProperty("--theme-bg", "#0d1b4d");
+        root.style.setProperty("--theme-table", "#152d80");
+      } else if (theme === "midnight") {
+        root.style.setProperty("--theme-bg", "#111827");
+        root.style.setProperty("--theme-table", "#1f2937");
+      } else if (theme === "fire") {
+        root.style.setProperty("--theme-bg", "#4b1d1d");
+        root.style.setProperty("--theme-table", "#7a2b2b");
+      } else {
+        root.style.setProperty("--theme-bg", "#0a4f2a");
+        root.style.setProperty("--theme-table", "#0d6d3d");
+      }
     }
 
-    function cardColor(suit) {
-      return (suit === "♥" || suit === "♦") ? "red" : "black";
+    function applyCardBack(cardBack) {
+      const root = document.documentElement;
+      if (cardBack === "gold") {
+        root.style.setProperty("--card-back", "#d6b459");
+      } else if (cardBack === "neon") {
+        root.style.setProperty("--card-back", "#14d9e5");
+      } else {
+        root.style.setProperty("--card-back", "#1d4f7d");
+      }
+    }
+
+    function renderShop(items) {
+      const shopItems = document.getElementById("shopItems");
+      shopItems.innerHTML = "";
+      items.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "shop-item";
+        div.innerHTML = `
+          <h4>${item.name}</h4>
+          <p>${item.owned ? "Owned" : `Cost: ${item.cost} chips`}</p>
+          <button data-item-id="${item.id}" data-owned="${item.owned}">
+            ${item.owned ? "Equip" : "Buy"}
+          </button>
+        `;
+        div.querySelector("button").addEventListener("click", () => {
+          if (!state.user) return;
+          if (item.owned) {
+            socket.emit("setActiveCosmetic", { userId: state.user.id, itemId: item.id });
+          } else {
+            socket.emit("buyItem", { userId: state.user.id, itemId: item.id });
+          }
+        });
+      });
+    }
+
+    function setLoggedIn(user) {
+      state.user = user;
+      state.theme = user.theme || "classic";
+      state.cardBack = user.cardBack || "classic";
+      applyTheme(state.theme);
+      applyCardBack(state.cardBack);
+
+      balanceValue.textContent = user.chips;
+      debtValue.textContent = user.debt;
+      themeValue.textContent = user.theme || "Classic";
+      cardBackValue.textContent = user.cardBack || "Classic";
+
+      authPanel.classList.add("hidden");
+      lobbyPanel.classList.remove("hidden");
+      gamePanel.classList.add("hidden");
+      shopPanel.classList.add("hidden");
+    }
+
+    function setLoggedOut() {
+      state.user = null;
+      state.roomCode = "";
+      state.myId = "";
+      authPanel.classList.remove("hidden");
+      lobbyPanel.classList.add("hidden");
+      gamePanel.classList.add("hidden");
+      shopPanel.classList.add("hidden");
     }
 
     function renderSelfCards() {
       selfCardsEl.innerHTML = "";
-
       state.myHand.forEach((card, index) => {
         const cardEl = document.createElement("div");
         const selected = state.selected.includes(index);
-        cardEl.className = "card " + cardColor(card.suit) + (selected ? " selected" : "");
+        cardEl.className = "card " + (card.suit === "♥" || card.suit === "♦" ? "red" : "black") + (selected ? " selected" : "");
         cardEl.innerHTML = `
           <div class="top">
             <span>${card.rank}</span>
@@ -434,13 +571,11 @@
         `;
         cardEl.onclick = () => {
           if (state.phase !== "draw1" && state.phase !== "draw2") return;
-
           if (state.selected.includes(index)) {
             state.selected = state.selected.filter((i) => i !== index);
           } else {
             state.selected.push(index);
           }
-
           renderSelfCards();
         };
         selfCardsEl.appendChild(cardEl);
@@ -449,75 +584,51 @@
 
     function renderPlayers() {
       playersEl.innerHTML = "";
-
       state.players.forEach((player) => {
-        const item = document.createElement("div");
-        item.className = "player";
+        const playerEl = document.createElement("div");
+        playerEl.className = "player";
 
         const dealerBadge = player.isDealer ? " <span class='dealer-badge'>🃏 Dealer</span>" : "";
-        item.innerHTML = `
+        playerEl.innerHTML = `
           <strong>${player.name}${dealerBadge}</strong>
           <div>Chips: ${player.chips}</div>
-          <div>Status: ${player.ready ? "Ready" : "Waiting"}</div>
+          <div>Debt: ${player.debt}</div>
+          <div>Status: ${player.ready ? "Ready" : (player.folded ? "Folded" : (player.stood ? "Stand" : "Waiting"))}</div>
+          <div>Last action: ${player.lastAction}</div>
         `;
-        playersEl.appendChild(item);
+        playersEl.appendChild(playerEl);
       });
     }
 
-    function updateStatusText() {
-      if (!state.roomCode) {
-        statusEl.innerHTML = "Create a room or join with a code.";
-        return;
-      }
-
-      if (state.phase === "lobby") {
-        statusEl.innerHTML = "Waiting for players. Press <strong>Start Next Hand</strong> when everyone is ready.";
-        return;
-      }
-
-      if (state.phase === "draw1") {
-        statusEl.innerHTML = "Round 1: select cards to discard, then click <strong>Discard & Draw</strong>.";
-        return;
-      }
-
-      if (state.phase === "draw2") {
-        statusEl.innerHTML = "Round 2: select cards to discard, then click <strong>Discard & Draw</strong>.";
-        return;
-      }
-    }
-
     function renderShowdown() {
-      if (!state.showdown) {
-        showdownEl.classList.add("hidden");
-        showdownEl.innerHTML = "";
-        return;
-      }
-
-      const items = state.showdown.results
-        .map((player) => `<li>${player.name}: ${player.handName}</li>`)
-        .join("");
+      if (!state.showdown) return;
 
       showdownEl.classList.remove("hidden");
       showdownEl.innerHTML = `
-        <h3>Winner</h3>
+        <h3>Showdown</h3>
+        <ul>
+          ${state.showdown.results.map((p) =>
+            `<li><strong>${p.name}</strong> — ${p.handName}</li>`
+          ).join("")}
+        </ul>
         <p><strong>${state.showdown.winnerName}</strong> wins the ${state.showdown.pot} chip pot.</p>
-        <ul>${items}</ul>
       `;
     }
 
     function refreshHud() {
       roomCodeDisplay.textContent = state.roomCode || "—";
       dealerDisplay.textContent = state.players.find((p) => p.isDealer)?.name || "—";
-
       potDisplay.textContent = state.currentPot;
-      chipDisplay.textContent = state.chips;
+      currentBetDisplay.textContent = state.currentBet;
 
       if (state.phase === "lobby") {
         roundInfo.textContent = "Lobby";
       } else if (state.phase === "draw1") {
-        roundInfo.textContent = "Round 1";
+        roundInfo.textContent = "Draw 1";
       } else if (state.phase === "draw2") {
-        roundInfo.textContent = "Round 2";
+        roundInfo.textContent = "Draw 2";
+      } else if (state.phase === "bet1") {
+        roundInfo.textContent = "Bet 1";
       }
 
       if (state.phase === "draw1" || state.phase === "draw2") {
@@ -526,29 +637,73 @@
         handStatus.textContent = "Waiting";
       }
 
-      discardBtn.disabled = !(state.phase === "draw1" || state.phase === "draw2");
-      startBtn.disabled = !(state.roomCode && state.phase === "lobby");
-
-      updateStatusText();
       renderPlayers();
       renderSelfCards();
       renderShowdown();
     }
 
-    document.getElementById("createBtn").addEventListener("click", () => {
-      const name = (playerNameInput.value || "Player").trim();
-      socket.emit("createRoom", { name });
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      socket.emit("register", { username, password });
     });
 
-    document.getElementById("joinBtn").addEventListener("click", () => {
-      const name = (playerNameInput.value || "Player").trim();
-      const code = (joinCodeInput.value || "").trim().toUpperCase();
-      socket.emit("joinRoom", { code, name });
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      socket.emit("login", { username, password });
     });
 
-    document.getElementById("startBtn").addEventListener("click", () => {
+    document.getElementById("logOutBtn").addEventListener("click", () => {
+      setLoggedOut();
+    });
+
+    document.getElementById("openShopBtn").addEventListener("click", () => {
+      socket.emit("getShop", { userId: state.user.id });
+      shopPanel.classList.remove("hidden");
+      gamePanel.classList.add("hidden");
+    });
+
+    document.getElementById("closeShopBtn").addEventListener("click", () => {
+      shopPanel.classList.add("hidden");
+      gamePanel.classList.remove("hidden");
+    });
+
+    document.getElementById("createRoomBtn").addEventListener("click", () => {
+      if (!state.user) return;
+      socket.emit("createRoom", { userId: state.user.id });
+    });
+
+    document.getElementById("joinRoomBtn").addEventListener("click", () => {
+      if (!state.user) return;
+      const code = document.getElementById("roomCodeInput").value.trim().toUpperCase();
+      socket.emit("joinRoom", { userId: state.user.id, code });
+    });
+
+    document.getElementById("checkBtn").addEventListener("click", () => {
       if (!state.roomCode) return;
-      socket.emit("startRound", { code: state.roomCode });
+      socket.emit("betAction", { code: state.roomCode, action: "check", amount: 0 });
+    });
+
+    document.getElementById("callBtn").addEventListener("click", () => {
+      if (!state.roomCode) return;
+      socket.emit("betAction", { code: state.roomCode, action: "call", amount: 0 });
+    });
+
+    document.getElementById("raiseBtn").addEventListener("click", () => {
+      if (!state.roomCode) return;
+      const amount = Number(document.getElementById("raiseInput").value) || 25;
+      socket.emit("betAction", { code: state.roomCode, action: "raise", amount });
+    });
+
+    document.getElementById("foldBtn").addEventListener("click", () => {
+      if (!state.roomCode) return;
+      socket.emit("betAction", { code: state.roomCode, action: "fold", amount: 0 });
+    });
+
+    document.getElementById("standBtn").addEventListener("click", () => {
+      if (!state.roomCode) return;
+      socket.emit("betAction", { code: state.roomCode, action: "stand", amount: 0 });
     });
 
     document.getElementById("discardBtn").addEventListener("click", () => {
@@ -561,52 +716,75 @@
       renderSelfCards();
     });
 
-    socket.on("joinedRoom", ({ code, playerId }) => {
+    socket.on("authResult", ({ success, message, user }) => {
+      if (!success) {
+        alert(message);
+        return;
+      }
+
+      setLoggedIn(user);
+      if (user.inventory) {
+        const inventory = user.inventory;
+        console.log("Player inventory:", inventory);
+      }
+    });
+
+    socket.on("joinedRoom", ({ code, userId, username }) => {
       state.roomCode = code;
-      state.myId = playerId;
-      state.showdown = null;
-      loginPanel.classList.add("hidden");
+      state.myId = userId;
+      authPanel.classList.add("hidden");
+      lobbyPanel.classList.add("hidden");
       gamePanel.classList.remove("hidden");
-      joinCodeInput.value = "";
+      shopPanel.classList.add("hidden");
       refreshHud();
     });
 
-    socket.on("roomState", ({ code, phase, players, dealerIndex, currentPot, roundNumber }) => {
+    socket.on("roomState", ({ code, phase, players, currentPot, currentBet, lastMessage, roundNumber }) => {
       state.roomCode = code;
       state.phase = phase;
       state.players = players;
-      state.dealerIndex = dealerIndex;
       state.currentPot = currentPot;
-      state.showdown = null;
-
-      const me = players.find((p) => p.id === state.myId);
-      if (me) {
-        state.chips = me.chips;
-      }
-
+      state.currentBet = currentBet;
+      statusEl.textContent = lastMessage || "Waiting for room...";
       refreshHud();
     });
 
-    socket.on("yourCards", ({ hand, chips, phase, currentPot, dealerIndex, roundNumber }) => {
+    socket.on("yourCards", ({ hand, chips, debt, phase, currentPot, currentBet, roundNumber, dealerIndex }) => {
       state.myHand = hand;
-      state.chips = chips;
       state.phase = phase;
       state.currentPot = currentPot;
-      state.dealerIndex = dealerIndex;
-      state.selected = [];
-      renderSelfCards();
+      state.currentBet = currentBet;
+      if (state.user) {
+        state.user.chips = chips;
+        state.user.debt = debt;
+        balanceValue.textContent = chips;
+        debtValue.textContent = debt;
+      }
       refreshHud();
     });
 
     socket.on("error", ({ message }) => {
       alert(message);
-      console.error(message);
     });
 
-    socket.on("showdown", ({ winnerName, pot, results }) => {
+    socket.on("shopState", ({ items }) => {
+      renderShop(items);
+    });
+
+    socket.on("shopResult", ({ success, message }) => {
+      if (success) {
+        alert(message);
+      } else {
+        alert(message);
+      }
+      if (state.user) {
+        socket.emit("getShop", { userId: state.user.id });
+      }
+    });
+
+    socket.on("showdown", ({ winnerName, pot, results, explanation }) => {
       state.showdown = { winnerName, pot, results };
-      state.phase = "lobby";
-      state.selected = [];
+      statusEl.textContent = explanation || `${winnerName} wins!`;
       refreshHud();
     });
 
